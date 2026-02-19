@@ -1,0 +1,117 @@
+@import url("https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;800&family=Assistant:wght@400;600;800&display=swap");
+
+:root{
+  --font: "Heebo","Assistant",system-ui,Arial,sans-serif;
+  --base:14pt;
+  --ink:#0f172a;
+  --muted:#334155;
+  --line: rgba(15,23,42,0.35);
+  --line2: rgba(15,23,42,0.55);
+  --accent:#1e3a8a;
+  --accent2:#0ea5e9;
+  --box: rgba(30,58,138,0.12);
+}
+
+*{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; font-family:var(--font); font-size:var(--base); color:var(--ink); background:#fff; }
+
+@page{ size:A4; margin:16mm; }
+@media print{ body{ -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+
+.sheet{
+  width:210mm; min-height:297mm;
+  margin:0 auto;
+  padding:16mm;
+  position:relative;
+}
+
+.page-number{
+  position:absolute;
+  top:10mm; left:10mm;
+  width:14mm; height:14mm;
+  border:2px solid var(--accent);
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-weight:800; font-size:12pt;
+}
+
+.header{
+  padding-top:6mm;
+  padding-bottom:5mm;
+  border-bottom:2px solid rgba(30,58,138,0.30);
+  position:relative;
+}
+.header:before{
+  content:"";
+  position:absolute;
+  right:0; left:0; top:0;
+  height:3.2mm;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  border-radius:2mm;
+}
+
+.title{
+  margin:0;
+  font-size:20pt;
+  font-weight:800;
+  letter-spacing:0.2px;
+}
+.task-line{
+  margin:2mm 0 0 0;
+  font-size:14pt;
+  font-weight:700;
+  color:var(--muted);
+}
+
+.main-question{
+  margin-top:6mm;
+  display:flex;
+  flex-direction:row-reverse;
+  align-items:flex-start;
+  gap:10px;
+}
+.main-bullet{ font-size:32px; line-height:1; margin-top:1px; } /* גדול */
+.main-text{ font-size:14pt; font-weight:800; } /* בלי משפטי דמו — נשאר ריק */
+
+.grid{
+  margin-top:6mm;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10mm;
+}
+
+.col{
+  padding:6mm;
+  border:1.6px solid rgba(30,58,138,0.22);
+  background: var(--box);
+  border-radius:4mm;
+}
+
+.item{ break-inside:avoid; margin-bottom:8mm; }
+.item:last-child{ margin-bottom:0; }
+
+.item-line{
+  display:flex;
+  flex-direction:row-reverse;
+  align-items:flex-start;
+  gap:10px;
+}
+
+.sub-bullet{ font-size:18px; line-height:1.1; margin-top:2px; } /* קטן */
+.eq{ font-size:14pt; font-weight:700; color:var(--ink); }
+
+.answer-space{
+  margin-top:3.5mm;
+  height:30mm;                  /* מקום לדרך */
+  border:1px solid rgba(15,23,42,0.22);
+  border-radius:3mm;
+  background:
+    linear-gradient(#fff,#fff) padding-box,
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 6mm,
+      var(--line2) 6mm,
+      var(--line2) 6.22mm
+    ) border-box;
+}
