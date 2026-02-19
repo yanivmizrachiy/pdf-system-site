@@ -1,0 +1,13 @@
+:root{--page-w:210mm;--page-h:297mm;--ink:#0b1b33;--accent:#1e3a8a;--paper:#fff;--bg:#eef2ff}
+html,body{margin:0;padding:0}
+body{font-family:"Noto Sans Hebrew",Arial,sans-serif;direction:rtl;color:var(--ink);background:var(--bg)}
+.toolbar{position:sticky;top:0;z-index:50;display:flex;gap:8px;align-items:center;justify-content:space-between;padding:10px 12px;background:#ffffffcc;backdrop-filter:blur(6px);border-bottom:1px solid #dbe3ff}
+.toolbar .left,.toolbar .right{display:flex;gap:8px;align-items:center}
+.btn{appearance:none;border:1px solid #c9d6ff;background:#fff;padding:8px 10px;border-radius:10px;cursor:pointer;font-size:14px;color:var(--ink)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.note{font-size:13px;opacity:.8}
+.stage{display:flex;justify-content:center;padding:18px 10px 30px}
+.page{width:210mm;min-height:297mm;background:var(--paper);box-shadow:0 16px 40px rgba(0,0,0,.15);border-radius:10px;overflow:hidden}
+.page iframe{width:100%;height:297mm;border:0;display:block}
+@media print{body{background:#fff}.toolbar{display:none!important}.stage{padding:0}.page{box-shadow:none;border-radius:0}}
+@page{size:A4;margin:12mm}
