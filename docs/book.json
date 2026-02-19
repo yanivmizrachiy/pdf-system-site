@@ -1,0 +1,16 @@
+{
+  "title": "משוואות ריבועיות",
+  "subtitle": "פתור את המשוואות הבאות:",
+  "pages": [
+    {
+      "n": 1,
+      "file": "pages/page-1.html",
+      "label": "דף 1"
+    },
+    {
+      "n": 2,
+      "file": "pages/page-2.html",
+      "label": "דף 2"
+    }
+  ]
+}

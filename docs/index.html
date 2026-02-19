@@ -2,21 +2,19 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>תצוגת דפים להדפסה</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>דפי עבודה — משוואות ריבועיות</title>
   <link rel="stylesheet" href="./print.css" />
-  <link rel="icon" href="icon-192.png">
-  <link rel="apple-touch-icon" href="icon-192.png">
-  <meta name="theme-color" content="#1e3a8a">
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <meta name="theme-color" content="#1e3a8a" />
+  <link rel="icon" href="./assets/icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="./assets/icons/icon-192.png" />
 </head>
 <body>
-  <div class="toolbar">
-    <div class="left">
-      <button class="btn" onclick="go(1)">דף 1</button>
-      <button class="btn" onclick="go(2)">דף 2</button>
-      <button class="btn primary" onclick="window.print()">הדפס</button>
-    </div>
-    <div class="right"><div class="note">תצוגת A4 אמיתית · הדפסה נקייה</div></div>
+  <div class="viewer-top">
+    <div class="viewer-title" id="t"></div>
+    <div class="viewer-sub" id="st"></div>
+    <div class="viewer-actions" id="nav"></div>
   </div>
 
   <div class="stage">
@@ -26,12 +24,57 @@
   </div>
 
 <script>
-function go(n){
-  document.getElementById("pv").src = "./pages/page-" + n + ".html";
-  history.replaceState(null,"","#page-" + n);
+let book=null, idx=1;
+
+function setFrame(n){
+  idx=n;
+  const frame=document.getElementById("pv");
+  frame.src = "./pages/page-" + n + ".html?ts=" + Date.now();
+  history.replaceState(null,"","#page-"+n);
 }
-const m = location.hash.match(/page-(\d+)/);
-if(m) go(parseInt(m[1],10));
+
+function printOne(){
+  const frame=document.getElementById("pv");
+  if(frame && frame.contentWindow){
+    frame.contentWindow.focus();
+    frame.contentWindow.print();
+  } else {
+    window.print();
+  }
+}
+
+async function loadBook(){
+  const r = await fetch("./book.json?ts="+Date.now());
+  book = await r.json();
+  document.getElementById("t").textContent = book.title || "משוואות ריבועיות";
+  document.getElementById("st").textContent = book.subtitle || "פתור את המשוואות הבאות:";
+  const nav=document.getElementById("nav");
+  nav.innerHTML="";
+  // page buttons
+  (book.pages||[]).forEach(p=>{
+    const b=document.createElement("button");
+    b.className="btn";
+    b.textContent = p.label || ("דף "+p.n);
+    b.onclick=()=>setFrame(p.n);
+    nav.appendChild(b);
+  });
+  // actions
+  const pr=document.createElement("button");
+  pr.className="btn primary";
+  pr.textContent="הדפס דף זה";
+  pr.onclick=printOne;
+  nav.appendChild(pr);
+
+  const rf=document.createElement("button");
+  rf.className="btn";
+  rf.textContent="רענון";
+  rf.onclick=()=>location.reload();
+  nav.appendChild(rf);
+
+  const m = location.hash.match(/page-(\d+)/);
+  if(m) setFrame(parseInt(m[1],10));
+}
+loadBook().catch(()=>{ /* keep default */ });
 </script>
 </body>
 </html>
