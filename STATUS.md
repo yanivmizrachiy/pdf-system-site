@@ -1,6 +1,6 @@
 # STATUS — pdf-system-site
 
-עודכן אוטומטית: **2026-02-20T14:34:56Z (UTC)**
+עודכן אוטומטית: **2026-02-20T14:35:35Z (UTC)**
 
 ## ✅ יציבות האייקון (PWA)
 - קישור התקנה קבוע: https://yanivmizrachiy.github.io/pdf-system-site/?pwa=1#page-1
