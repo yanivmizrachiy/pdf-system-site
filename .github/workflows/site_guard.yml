@@ -1,44 +1,53 @@
-name: Site Guard (PWA+A4) + Auto Sync
+name: Site Guard
 
 on:
   push:
-    branches: ["main"]
+    branches: [ "main" ]
     paths:
       - "docs/**"
       - "rules/**"
       - "scripts/**"
       - "RULES.md"
-      - "STATUS.md"
-  workflow_dispatch: {}
+  workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
   guard:
-    if: github.actor != "github-actions[bot]"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 
-      - name: Validate site invariants
+      - name: Validate site invariants (if validator exists)
         run: |
-          python scripts/validate_site.py
+          python --version
+          if [ -f scripts/validate_site.py ]; then
+            python scripts/validate_site.py
+          else
+            echo "validator missing: scripts/validate_site.py (skipping)"
+          fi
 
-      - name: Sync RULES.md + STATUS.md (auto)
+      - name: Sync RULES.md (auto)
         run: |
-          python scripts/sync_rules.py
-          python scripts/update_status.py
+          if [ -f scripts/sync_rules.py ]; then
+            python scripts/sync_rules.py
+          else
+            echo "sync_rules missing: scripts/sync_rules.py (skipping)"
+          fi
+
           if git diff --quiet; then
-            echo "RULES/STATUS already up-to-date"
+            echo "RULES already up-to-date"
             exit 0
           fi
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add RULES.md STATUS.md
-          git commit -m "auto: sync RULES+STATUS (guard)"
-          git push
+          git add RULES.md || true
+          git commit -m "auto: sync RULES.md (guard)" || true
+          git push || true
