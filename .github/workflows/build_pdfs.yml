@@ -1,0 +1,40 @@
+name: Build PDFs (A4)
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - "latex/**"
+
+permissions:
+  contents: write
+
+jobs:
+  pdf:
+    if: github.actor != "github-actions[bot]"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install TeX (minimal)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y texlive-xetex texlive-lang-other texlive-latex-recommended texlive-latex-extra lmodern fonts-dejavu
+
+      - name: Build PDF
+        run: |
+          mkdir -p docs/pdfs
+          xelatex -interaction=nonstopmode -halt-on-error -output-directory=docs/pdfs latex/worksheet-1.tex
+          mv -f docs/pdfs/worksheet-1.pdf docs/pdfs/worksheet-1.pdf
+
+      - name: Commit PDFs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/pdfs/worksheet-1.pdf
+          if git diff --cached --quiet; then
+            echo "No PDF changes"
+            exit 0
+          fi
+          git commit -m "auto: build worksheet-1.pdf"
+          git push
