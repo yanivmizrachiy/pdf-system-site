@@ -1,42 +1,56 @@
 from pathlib import Path
 from datetime import datetime, timezone
+import json, os
 
 BASE="https://yanivmizrachiy.github.io/pdf-system-site"
 INSTALL=f"{BASE}/?pwa=1#page-1"
 
-now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+now=datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
 
-rules = f"""# RULES — pdf-system-site
+tex=list(Path("sources").glob("*.tex")) if Path("sources").exists() else []
+pdf=list(Path("docs/pdfs").glob("*.pdf")) if Path("docs/pdfs").exists() else []
 
-עודכן אוטומטית: {now}
+pwa_ok=True
+manifest_path=Path("docs/manifest.webmanifest")
+if manifest_path.exists():
+    try:
+        m=json.loads(manifest_path.read_text())
+        if m.get("start_url")!="/pdf-system-site/?pwa=1":
+            pwa_ok=False
+        if m.get("scope")!="/pdf-system-site/":
+            pwa_ok=False
+    except:
+        pwa_ok=False
+else:
+    pwa_ok=False
 
-## עקרונות שאסור לשבור
+progress=0
+if pwa_ok: progress+=30
+if tex: progress+=30
+if pdf: progress+=30
+progress+=10
 
-- הפרויקט הוא דפי עבודה להדפסה (A4)
-- האייקון הקבוע:
-  {INSTALL}
-
-## קבועים טכניים
-- start_url = /pdf-system-site/?pwa=1
-- scope = /pdf-system-site/
-- icons:
-  - /pdf-system-site/icons/icon-192.png
-  - /pdf-system-site/icons/icon-512.png
-
-## ניהול
-- מקור אמת יחיד: RULES.md + STATUS.md
-"""
-
-Path("RULES.md").write_text(rules, encoding="utf-8")
-
-status = f"""# STATUS — pdf-system-site
+rules=f"""# RULES — pdf-system-site
 
 עודכן: {now}
 
-אייקון קבוע:
+## מצב מערכת
+PWA תקין: {pwa_ok}
+קבצי TEX: {len(tex)}
+קבצי PDF: {len(pdf)}
+התקדמות כללית: {progress}%
+
+## אייקון קבוע (לא לשנות)
 {INSTALL}
 """
 
-Path("STATUS.md").write_text(status, encoding="utf-8")
+Path("RULES.md").write_text(rules,encoding="utf-8")
 
-print("OK rebuilt")
+status=f"""# STATUS — pdf-system-site
+עודכן: {now}
+התקדמות: {progress}%
+"""
+
+Path("STATUS.md").write_text(status,encoding="utf-8")
+
+print("OK RULES+STATUS rebuilt")

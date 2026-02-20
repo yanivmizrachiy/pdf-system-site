@@ -1,19 +1,12 @@
 # RULES — pdf-system-site
 
-עודכן אוטומטית: 2026-02-20 14:48 UTC
+עודכן: 2026-02-20 14:52 UTC
 
-## עקרונות שאסור לשבור
+## מצב מערכת
+PWA תקין: True
+קבצי TEX: 0
+קבצי PDF: 0
+התקדמות כללית: 40%
 
-- הפרויקט הוא דפי עבודה להדפסה (A4)
-- האייקון הקבוע:
-  https://yanivmizrachiy.github.io/pdf-system-site/?pwa=1#page-1
-
-## קבועים טכניים
-- start_url = /pdf-system-site/?pwa=1
-- scope = /pdf-system-site/
-- icons:
-  - /pdf-system-site/icons/icon-192.png
-  - /pdf-system-site/icons/icon-512.png
-
-## ניהול
-- מקור אמת יחיד: RULES.md + STATUS.md
+## אייקון קבוע (לא לשנות)
+https://yanivmizrachiy.github.io/pdf-system-site/?pwa=1#page-1
