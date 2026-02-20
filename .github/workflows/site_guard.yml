@@ -1,31 +1,32 @@
-name: Site Guard (No Breaks)
+name: Site Guard (A4 + PWA)
 
 on:
   push:
-    branches: [ "main" ]
-  workflow_dispatch:
+    branches: ["main"]
 
 permissions:
   contents: write
 
+concurrency:
+  group: site-guard-main
+  cancel-in-progress: true
+
 jobs:
   guard:
+    if: github.actor != "github-actions[bot]"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-python@v5
         with:
           python-version: "3.x"
-
-      - name: Validate site invariants (A4 + PWA)
+      - name: Validate site invariants
         run: python scripts/validate_site.py
-
-      - name: Sync RULES.md (auto)
+      - name: Sync RULES.md
         run: |
           python scripts/sync_rules.py
           if git diff --quiet; then
-            echo "RULES already up-to-date"
+            echo "RULES ok"
             exit 0
           fi
           git config user.name "github-actions[bot]"
