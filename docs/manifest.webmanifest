@@ -1,21 +1,13 @@
 {
-  "name": "דפי עבודה — משוואות ריבועיות",
-  "short_name": "A4 משוואות",
-  "start_url": "/pdf-system-site/",
+  "name": "A4 הדפסה — יניב",
+  "short_name": "A4 הדפסה",
+  "start_url": "/pdf-system-site/?pwa=1",
   "scope": "/pdf-system-site/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#1e3a8a",
+  "background_color": "#ff4fd8",
+  "theme_color": "#ff4fd8",
   "icons": [
-    {
-      "src": "/pdf-system-site/assets/icons/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "/pdf-system-site/assets/icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
+    { "src": "/pdf-system-site/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/pdf-system-site/icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
   ]
 }

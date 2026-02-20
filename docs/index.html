@@ -76,5 +76,10 @@ async function loadBook(){
 }
 loadBook().catch(()=>{ /* keep default */ });
 </script>
+
+  <div style="position:fixed;left:12px;bottom:12px;display:flex;gap:8px;z-index:9999">
+    <button onclick="pwaUpdateNow()" style="padding:10px 12px;border:0;border-radius:10px;background:#ff4fd8;color:#fff;font-weight:700">עדכן עכשיו</button>
+    <button onclick="hardRefresh()" style="padding:10px 12px;border:1px solid #ff4fd8;border-radius:10px;background:#fff;color:#ff4fd8;font-weight:700">רענון קשיח</button>
+  </div>
 </body>
 </html>
