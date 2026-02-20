@@ -1,97 +1,42 @@
-from __future__ import annotations
 from pathlib import Path
-from datetime import datetime, timezone
-import json
+from datetime import datetime
 
-OWNER="yanivmizrachiy"
-REPO="pdf-system-site"
-BASE=f"https://{OWNER}.github.io/{REPO}"
+BASE="https://yanivmizrachiy.github.io/pdf-system-site"
 INSTALL=f"{BASE}/?pwa=1#page-1"
 
-def read(p: Path) -> str:
-    return p.read_text(encoding="utf-8", errors="ignore") if p.exists() else ""
+now = datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC")
 
-def write(p: Path, s: str):
-    p.write_text(s, encoding="utf-8")
+rules = f"""# RULES — pdf-system-site
 
-def upsert_block(text: str, begin: str, end: str, block: str) -> str:
-    if begin in text and end in text:
-        pre = text.split(begin)[0].rstrip()
-        post = text.split(end, 1)[1].lstrip()
-        return pre + "\n\n" + block.strip() + "\n\n" + post
-    return (text.rstrip() + "\n\n" + block.strip() + "\n")
+עודכן אוטומטית: {now}
 
-def main():
-    now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+## עקרונות שאסור לשבור
 
-    # --- RULES.md ---
-    rules_p = Path("RULES.md")
-    rules = read(rules_p) or "# RULES — pdf-system-site\n\n"
+- הפרויקט הוא דפי עבודה להדפסה (A4)
+- האייקון הקבוע:
+  {INSTALL}
 
-    begin="<!-- AUTO:INVARIANTS:BEGIN -->"
-    end="<!-- AUTO:INVARIANTS:END -->"
+## קבועים טכניים
+- start_url = /pdf-system-site/?pwa=1
+- scope = /pdf-system-site/
+- icons:
+  - /pdf-system-site/icons/icon-192.png
+  - /pdf-system-site/icons/icon-512.png
 
-    block = f"""{begin}
-## עקרונות שאסור לשבור (חובה)
-
-### 🎯 מטרה
-- הפרויקט הזה הוא **דפי עבודה להדפסה (A4)**. האתר הוא מעטפת פתיחה/בחירה/הדפסה בלבד.
-
-### 📌 אייקון קבוע בנייד (אסור שיתקלקל)
-- מתקינים אייקון **רק** מהקישור הקבוע (לא משתנה לעולם):
-  - {INSTALL}
-
-### 🔒 קבועים טכניים שאסור לשנות
-- :
-  -  חייב להיות: 
-  -  חייב להיות: 
-  -  חייב לכלול בדיוק את:
-    - 
-    - 
-- קבצי חובה שקיימים תמיד:
-  - 
-  - 
-  - 
-  - 
-  - 
-
-### 🖨️ הדפסה (Print-First)
-- כל דף עבודה אמיתי יהיה **PDF** (או דף HTML שמודפס A4 בצורה נקייה) עם כפתור **PDF / הדפסה** ברור.
-- לא בונים “מערכת מתוקשבת”. כל מה שלא קשור להדפסה — לא נכנס.
-
-### ✅ ניהול פרויקט בלי סתירות
-- מקור אמת יחיד:  + 
-- כל שינוי שמבוצע חייב להשתקף כאן (אוטומטית דרך workflow).
-{end}
+## ניהול
+- מקור אמת יחיד: RULES.md + STATUS.md
 """
 
-    rules = upsert_block(rules, begin, end, block)
-    if "## היסטוריית שינויים" not in rules:
-        rules += "\n## היסטוריית שינויים\n- (האוטומציה תוסיף כאן כשנרצה)\n"
+Path("RULES.md").write_text(rules, encoding="utf-8")
 
-    write(rules_p, rules)
+status = f"""# STATUS — pdf-system-site
 
-    # --- STATUS.md ---
-    status_p = Path("STATUS.md")
-    status = f"""# STATUS — pdf-system-site
+עודכן: {now}
 
-עודכן אוטומטית: **{now}**
-
-## קישורים חשובים
-- אתר: {BASE}/
-- התקנת אייקון (קבוע): {INSTALL}
-- RULES: https://github.com/{OWNER}/{REPO}/blob/main/RULES.md
-- STATUS: https://github.com/{OWNER}/{REPO}/blob/main/STATUS.md
-
-## מצב קריטי (חייב תמיד להיות תקין)
-- PWA/אייקון: start_url/scope/icons **לא משתנים**
-- המרה/הדפסה: הפרויקט = דפי עבודה להדפסה (A4)
-
-## מה יש כרגע
-- דפי HTML קיימים: docs/pages/page-*.html
-- נכסי PWA: manifest + sw + icons + print.css
+אייקון קבוע:
+{INSTALL}
 """
-    write(status_p, status)
 
-if __name__ == "__main__":
-    main()
+Path("STATUS.md").write_text(status, encoding="utf-8")
+
+print("OK rebuilt")
