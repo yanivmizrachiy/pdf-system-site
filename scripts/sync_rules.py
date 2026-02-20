@@ -1,0 +1,25 @@
+import json
+from pathlib import Path
+rules = json.loads(Path("rules/rules.json").read_text(encoding="utf-8"))
+
+md = []
+md.append("# RULES — pdf-system-site")
+md.append("")
+md.append("## מה זה האתר")
+md.append("- אתר להצגת **דפי עבודה להדפסה A4** (לא משחק, לא מתוקשב-אינטראקטיבי).")
+md.append("- יש גם התקנה כ־PWA רק כדי לקבל **אייקון קבוע בנייד** (הדפים עצמם להדפסה).")
+md.append("")
+md.append("## קישור האייקון הקבוע (לא משתנה)")
+md.append("- https://yanivmizrachiy.github.io/pdf-system-site/?pwa=1#page-1")
+md.append("")
+md.append("## עקרונות שלא שוברים")
+md.append("- לא משנים start_url/scope במניפסט בלי סיבה.")
+md.append("- לא מוחקים icons/manifest/sw/print.css.")
+md.append("- כל שינוי חייב לעבור validate_site.py ב־Actions.")
+md.append("")
+md.append("## מצב נוכחי (מקוצר)")
+md.append(f"- pages: {rules.get(pages_count,?)}")
+md.append(f"- pdfs: {rules.get(pdfs_count,?)}")
+md.append("")
+Path("RULES.md").write_text("\n".join(md).strip()+"\n", encoding="utf-8")
+print("OK RULES.md")

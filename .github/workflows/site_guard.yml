@@ -1,14 +1,15 @@
-name: Site Guard
+name: Site Guard (PWA+A4) + Auto Sync
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
     paths:
       - "docs/**"
       - "rules/**"
       - "scripts/**"
       - "RULES.md"
       - "STATUS.md"
+  workflow_dispatch: {}
 
 permissions:
   contents: write
@@ -19,24 +20,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 
-      - name: Validate invariants (A4 + PWA must not break)
+      - name: Validate site invariants
         run: |
           python scripts/validate_site.py
 
-      - name: Sync RULES.md + STATUS.md (guard)
+      - name: Sync RULES.md + STATUS.md (auto)
         run: |
           python scripts/sync_rules.py
           python scripts/update_status.py
           if git diff --quiet; then
-            echo "No changes"
+            echo "RULES/STATUS already up-to-date"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add RULES.md STATUS.md
-          git commit -m "auto: sync RULES.md + STATUS.md (guard)"
+          git commit -m "auto: sync RULES+STATUS (guard)"
           git push

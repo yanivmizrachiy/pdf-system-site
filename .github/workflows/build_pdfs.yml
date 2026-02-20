@@ -2,10 +2,10 @@ name: Build PDFs (A4)
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
     paths:
       - "latex/**"
-  workflow_dispatch:
+  workflow_dispatch: {}
 
 permissions:
   contents: write
@@ -28,7 +28,7 @@ jobs:
             lmodern \
             fonts-dejavu
 
-      - name: Build PDFs into docs/pdfs
+      - name: Build PDF to docs/pdfs
         run: |
           mkdir -p docs/pdfs
           xelatex -interaction=nonstopmode -halt-on-error -output-directory=docs/pdfs latex/worksheet-1.tex
