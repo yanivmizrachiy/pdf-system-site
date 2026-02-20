@@ -1,10 +1,10 @@
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timezone
 
 BASE="https://yanivmizrachiy.github.io/pdf-system-site"
 INSTALL=f"{BASE}/?pwa=1#page-1"
 
-now = datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC")
+now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
 
 rules = f"""# RULES — pdf-system-site
 
