@@ -1,16 +1,17 @@
 # STATUS — pdf-system-site
 
-עודכן אוטומטית: **2026-02-20T14:35:35Z (UTC)**
+עודכן אוטומטית: **2026-02-20 14:43 UTC**
 
-## ✅ יציבות האייקון (PWA)
-- קישור התקנה קבוע: https://yanivmizrachiy.github.io/pdf-system-site/?pwa=1#page-1
-- קבצי חובה קיימים? **כן**
-- ✅ כל הקבצים קיימים
+## קישורים חשובים
+- אתר: https://yanivmizrachiy.github.io/pdf-system-site/
+- התקנת אייקון (קבוע): https://yanivmizrachiy.github.io/pdf-system-site/?pwa=1#page-1
+- RULES: https://github.com/yanivmizrachiy/pdf-system-site/blob/main/RULES.md
+- STATUS: https://github.com/yanivmizrachiy/pdf-system-site/blob/main/STATUS.md
 
-## 📄 מצב דפים להדפסה
-- pages קיימים: **3**
-- pdfs קיימים: **0**
+## מצב קריטי (חייב תמיד להיות תקין)
+- PWA/אייקון: start_url/scope/icons **לא משתנים**
+- המרה/הדפסה: הפרויקט = דפי עבודה להדפסה (A4)
 
-## 📌 הערה חשובה
-אם האייקון בנייד עושה 404 — זה כמעט תמיד כי הוא הותקן מכתובת אחרת.
-מוחקים את האייקון הישן ומתקינים מחדש **רק** מהקישור הקבוע למעלה.
+## מה יש כרגע
+- דפי HTML קיימים: docs/pages/page-*.html
+- נכסי PWA: manifest + sw + icons + print.css
