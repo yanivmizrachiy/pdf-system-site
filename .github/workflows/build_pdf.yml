@@ -18,20 +18,33 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install TeX Live
+      - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y texlive-xetex texlive-lang-arabic texlive-fonts-recommended
+          sudo apt-get install -y \
+            texlive-xetex \
+            texlive-lang-arabic \
+            texlive-fonts-recommended \
+            jq
 
       - name: Build PDFs from build.json
         run: |
+          set -e
           mkdir -p docs/pdfs
-          FILES=
 
-          for f in ; do
-            if [ -f "sources/" ]; then
-              xelatex -interaction=nonstopmode -output-directory=docs/pdfs sources/
+          FILES=$(jq -r ".files[]" build.json)
+
+          for f in $FILES; do
+            echo "Building $f"
+            if [ ! -f "sources/$f" ]; then
+              echo "ERROR: sources/$f not found"
+              exit 1
             fi
+
+            xelatex -interaction=nonstopmode \
+              -output-directory=docs/pdfs \
+              sources/$f
+
           done
 
       - name: Commit PDFs if changed
@@ -40,6 +53,7 @@ jobs:
             echo "No PDF changes"
             exit 0
           fi
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add docs/pdfs
