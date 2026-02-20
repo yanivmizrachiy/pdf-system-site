@@ -1,0 +1,47 @@
+name: Build PDFs (XeLaTeX)
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - "sources/**"
+      - "build.json"
+      - ".github/workflows/build_pdf.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install TeX Live
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y texlive-xetex texlive-lang-arabic texlive-fonts-recommended
+
+      - name: Build PDFs from build.json
+        run: |
+          mkdir -p docs/pdfs
+          FILES=
+
+          for f in ; do
+            if [ -f "sources/" ]; then
+              xelatex -interaction=nonstopmode -output-directory=docs/pdfs sources/
+            fi
+          done
+
+      - name: Commit PDFs if changed
+        run: |
+          if git diff --quiet; then
+            echo "No PDF changes"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/pdfs
+          git commit -m "auto: build PDFs"
+          git push
