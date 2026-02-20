@@ -5,6 +5,7 @@ on:
     branches: [ "main" ]
     paths:
       - "latex/**"
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -16,16 +17,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install TeX (minimal)
+      - name: Install TeX (XeLaTeX + Hebrew + fonts)
         run: |
           sudo apt-get update
-          sudo apt-get install -y texlive-xetex texlive-lang-other texlive-latex-recommended texlive-latex-extra lmodern fonts-dejavu
+          sudo apt-get install -y \
+            texlive-xetex \
+            texlive-lang-other \
+            texlive-latex-recommended \
+            texlive-latex-extra \
+            lmodern \
+            fonts-dejavu
 
-      - name: Build PDF
+      - name: Build PDF to docs/pdfs
         run: |
           mkdir -p docs/pdfs
           xelatex -interaction=nonstopmode -halt-on-error -output-directory=docs/pdfs latex/worksheet-1.tex
-          mv -f docs/pdfs/worksheet-1.pdf docs/pdfs/worksheet-1.pdf
+          test -f docs/pdfs/worksheet-1.pdf
 
       - name: Commit PDFs
         run: |
