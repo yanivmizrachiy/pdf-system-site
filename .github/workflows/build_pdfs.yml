@@ -20,9 +20,15 @@ jobs:
       - name: Install TeX (XeLaTeX + Hebrew + fonts)
         run: |
           sudo apt-get update
-          sudo apt-get install -y texlive-xetex texlive-lang-other texlive-latex-recommended texlive-latex-extra lmodern fonts-dejavu
+          sudo apt-get install -y \
+            texlive-xetex \
+            texlive-lang-other \
+            texlive-latex-recommended \
+            texlive-latex-extra \
+            lmodern \
+            fonts-dejavu
 
-      - name: Build PDF to docs/pdfs
+      - name: Build PDFs into docs/pdfs
         run: |
           mkdir -p docs/pdfs
           xelatex -interaction=nonstopmode -halt-on-error -output-directory=docs/pdfs latex/worksheet-1.tex

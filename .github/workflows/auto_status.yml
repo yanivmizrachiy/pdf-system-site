@@ -1,38 +1,33 @@
-name: Auto Rules Sync
+name: Auto Status + Rules
 
 on:
   push:
     branches: [ "main" ]
-    paths:
-      - "docs/**"
-      - "rules/**"
-      - "scripts/**"
-      - "RULES.md"
-      - "STATUS.md"
+  workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  sync:
+  status:
     if: github.actor != "github-actions[bot]"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 
-      - name: Sync RULES.md + STATUS.md
+      - name: Update STATUS.md + RULES.md
         run: |
-          python scripts/sync_rules.py
           python scripts/update_status.py
           if git diff --quiet; then
-            echo "No changes"
+            echo "Already up-to-date"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add RULES.md STATUS.md
-          git commit -m "auto: sync RULES.md + STATUS.md"
+          git add STATUS.md RULES.md
+          git commit -m "auto: update STATUS + RULES progress"
           git push
