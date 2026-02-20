@@ -49,3 +49,20 @@
 - האתר מפורסם ב-GitHub Pages מתוך /print-html
 - קיימים: manifest.webmanifest, sw.js, אייקונים כחולים ב- assets/icons/
 - יצירת האייקון במסך הבית נעשית דרך הדפדפן: "הוסף למסך הבית" (פעולה חד-פעמית)
+
+<!-- AUTO:INVARIANTS:BEGIN -->
+## עקרונות שאסור לשבור (חובה)
+- זה פרויקט **דפי עבודה להדפסה (A4)**. האתר הוא מעטפת לפתיחה והדפסה.
+- האייקון בנייד מותקן רק מהקישור הקבוע (לא לשנות לעולם):
+  - https://yanivmizrachiy.github.io/pdf-system-site/?pwa=1#page-1
+- אסור לשנות לעולם:
+  - `docs/manifest.webmanifest` → `start_url` חייב להישאר `/pdf-system-site/?pwa=1`
+  - `docs/manifest.webmanifest` → `scope` חייב להישאר `/pdf-system-site/`
+  - אייקונים חייבים להישאר:
+    - `/pdf-system-site/icons/icon-192.png`
+    - `/pdf-system-site/icons/icon-512.png`
+  - קבצים שחייבים להישאר קיימים: `docs/sw.js`, `docs/print.css`, `docs/print-helper.js`
+- לכל דף `docs/pages/page-*.html` חייב להיות כפתור **PDF / הדפסה** ועיצוב Print-first (`.page` + `print.css`).
+- Gate אוטומטי: Workflow בשם **Site Guard** חייב להיות ירוק לפני שסומכים על עדכון.
+<!-- AUTO:INVARIANTS:END -->
+
