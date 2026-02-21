@@ -1,84 +1,35 @@
-:root{
-  --ink:#0b1220;
-  --muted:#334155;
-  --blue:#1e3a8a;
-  --paper:#ffffff;
-  --bg:#eef2ff;
-  --shadow: 0 10px 28px rgba(2,6,23,.12);
+/* === A4 STRICT PRINT ENGINE === */
+
+@page {
+  size: A4;
+  margin: 0;
 }
 
-html,body{ height:100%; }
-body{
-  margin:0;
-  font-family:"Noto Sans Hebrew","Heebo","Assistant",Arial,sans-serif;
-  font-size:14pt;
-  color:var(--ink);
-  background:var(--bg);
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 210mm;
+  height: 297mm;
 }
 
-.viewer-top{
-  position:sticky; top:0; z-index:10;
-  background:linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-  border-bottom:1px solid rgba(15,23,42,.10);
-  padding:10px 12px;
-}
-.viewer-title{
-  font-weight:800;
-  color:var(--blue);
-  font-size:18pt;
-  line-height:1.1;
-}
-.viewer-sub{
-  margin-top:4px;
-  color:var(--muted);
-  font-size:12.5pt;
-}
-.viewer-actions{
-  margin-top:10px;
-  display:flex; gap:8px; flex-wrap:wrap;
-}
-.btn{
-  border:1px solid rgba(30,58,138,.25);
-  background:#fff;
-  color:var(--blue);
-  border-radius:10px;
-  padding:8px 12px;
-  font-weight:700;
-  cursor:pointer;
-}
-.btn.primary{
-  background:var(--blue);
-  color:#fff;
-  border-color:var(--blue);
+.page {
+  width: 210mm;
+  height: 297mm;
+  box-sizing: border-box;
+  padding: 20mm;
+  overflow: hidden;
+  page-break-after: always;
+  break-after: page;
 }
 
-.stage{
-  padding:14px 10px 22px;
-  display:flex;
-  justify-content:center;
+/* Prevent unwanted stretching */
+* {
+  max-width: 100%;
 }
 
-.page{
-  width:210mm;
-  height:297mm;
-  background:var(--paper);
-  box-shadow:var(--shadow);
-  border-radius:10px;
-  overflow:hidden;
-}
-iframe{
-  width:100%;
-  height:100%;
-  border:0;
-  background:#fff;
-}
-
-/* Print exactly A4 */
-@media print{
-  body{ background:#fff; }
-  .viewer-top, .viewer-actions{ display:none !important; }
-  .stage{ padding:0; }
-  .page{ box-shadow:none; border-radius:0; width:auto; height:auto; }
-  iframe{ height:297mm; }
-  @page { size: A4; margin: 12mm; }
+/* Hide buttons when printing */
+@media print {
+  .no-print {
+    display: none !important;
+  }
 }
