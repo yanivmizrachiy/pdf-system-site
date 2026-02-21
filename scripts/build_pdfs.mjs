@@ -2,64 +2,51 @@ import { chromium } from "playwright";
 import fs from "fs";
 import path from "path";
 
-const BASE_URL = process.env.BASE_URL || "https://yanivmizrachiy.github.io/pdf-system-site";
+const BASE_URL = "https://yanivmizrachiy.github.io/pdf-system-site";
 const OUT_DIR = path.join("docs", "pdfs");
-const PAGES = [1, 2, 3];
+const PAGES = [1,2,3];
 
-function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
-
-async function waitForMathJaxAndFonts(page) {
-  // fonts
-  await page.evaluate(async () => {
-    try {
-      if (document.fonts && document.fonts.ready) await document.fonts.ready;
-    } catch (e) {}
-  });
-
-  // MathJax (if exists)
-  await page.evaluate(async () => {
-    try {
-      const mj = window.MathJax;
-      if (mj && typeof mj.typesetPromise === "function") {
-        await mj.typesetPromise();
-      }
-    } catch (e) {}
-  });
-}
+function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
 
 (async () => {
-  fs.mkdirSync(OUT_DIR, { recursive: true });
+  fs.mkdirSync(OUT_DIR, { recursive:true });
 
   const browser = await chromium.launch();
-  const page = await browser.newPage({
-    viewport: { width: 1200, height: 1600 },
-    deviceScaleFactor: 2
+  const context = await browser.newContext({
+    viewport: { width: 1240, height: 1754 } // A4 ratio
   });
+  const page = await context.newPage();
 
-  // Important: render like screen (your layout is screen-first), then PDF
-  await page.emulateMedia({ media: "screen" });
-
-  for (const n of PAGES) {
+  for(const n of PAGES){
     const url = `${BASE_URL}/pages/page-${n}.html?fresh=${Date.now()}`;
-    console.log(`OPEN ${url}`);
+    console.log("OPEN", url);
 
-    await page.goto(url, { waitUntil: "domcontentloaded" });
-    await sleep(300);
+    await page.goto(url, { waitUntil:"networkidle" });
+    await sleep(500);
 
-    await waitForMathJaxAndFonts(page);
-    await sleep(300);
+    // חכה שיש באמת תרגילים בדף
+    await page.waitForSelector(".item", { timeout:10000 });
 
-    const outPath = path.join(OUT_DIR, `page-${n}.pdf`);
-    await page.pdf({
-      path: outPath,
-      format: "A4",
-      printBackground: true,
-      preferCSSPageSize: true,
-      margin: { top: "0mm", right: "0mm", bottom: "0mm", left: "0mm" }
+    // חכה לפונטים
+    await page.evaluate(async ()=>{
+      if(document.fonts?.ready){
+        await document.fonts.ready;
+      }
     });
 
-    const st = fs.statSync(outPath);
-    console.log(`WROTE ${outPath} size=${st.size}`);
+    await sleep(300);
+
+    const out = path.join(OUT_DIR, `page-${n}.pdf`);
+
+    await page.pdf({
+      path: out,
+      format: "A4",
+      printBackground: true,
+      margin: { top:"10mm", bottom:"10mm", left:"10mm", right:"10mm" }
+    });
+
+    const size = fs.statSync(out).size;
+    console.log("WROTE", out, "size=", size);
   }
 
   await browser.close();
