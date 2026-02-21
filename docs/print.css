@@ -1,6 +1,8 @@
 /* A4_PRINT_FIRST_MARKER */
 @page { size: A4; margin: 0; }
+
 html, body { margin:0; padding:0; }
+
 .page{
   width:210mm; height:297mm;
   box-sizing:border-box;
@@ -8,5 +10,15 @@ html, body { margin:0; padding:0; }
   overflow:hidden;
   page-break-after:always; break-after:page;
 }
+
 *{ box-sizing:border-box; }
-@media print{ .no-print{ display:none!important; } }
+
+@media print{
+  html, body{
+    width:210mm !important;
+    height:auto !important;
+    margin:0 !important;
+    padding:0 !important;
+  }
+  .no-print{ display:none !important; }
+}
