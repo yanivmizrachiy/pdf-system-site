@@ -22,3 +22,8 @@ https://yanivmizrachiy.github.io/pdf-system-site/?pwa=1#page-1
 ## GitHub Pages + PDFs
 - Pages מוגדר לשרת מהשורש (path=/). לכן ה-PDFים חייבים להיות בתיקייה /pdfs בשורש הריפו (ולא docs/pdfs).
 - Build PDFs (Playwright) מייצר כעת קבצים ל-pdfs/page-N.pdf ומבצע commit+push אוטומטית.
+
+## PDF Build Mode
+- בניית PDF כעת נעשית מקומית (file://) מתוך הריפו עצמו.
+- אין תלות ב-GitHub Pages בזמן build.
+- קבצי PDF נוצרים ב-/pdfs בשורש הריפו.
