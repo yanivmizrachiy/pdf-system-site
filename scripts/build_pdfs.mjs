@@ -63,6 +63,7 @@ async function safeWaitReady(page) {
 async function main() {
   const SITE = "https://yanivmizrachiy.github.io/pdf-system-site";
   const pages = listPages();
+  fs.mkdirSync("pdfs", { recursive: true });
   if (!pages.length) {
     console.log("❌ No pages found under docs/pages or pages/");
     process.exit(1);
@@ -84,7 +85,7 @@ async function main() {
   for (const p of pages) {
     const n = pageNum(p.file);
     const url = `${SITE}/pages/${p.file}?fresh=${Date.now()}`;
-    const out = `docs/pdfs/page-${n}.pdf`;
+    const out = `pdfs/page-${n}.pdf`;
 
     console.log(`OPEN ${url}`);
     try {

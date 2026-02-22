@@ -18,3 +18,7 @@ https://yanivmizrachiy.github.io/pdf-system-site/?pwa=1#page-1
 ## יצירת PDF (Build PDFs)
 - מנגנון יצירת PDF לא מסתמך יותר על `.item` (כי לא כל העמודים מכילים אותו). במקום זה יש המתנה חכמה: DOM+networkidle+פונטים+MathJax ואז `.page`/`body`/`mjx-container`.
 - אם עמוד אחד נכשל, הריצה ממשיכה ולא מפילה את הכל (כדי ש-page-4 ומעלה עדיין יווצרו).
+
+## GitHub Pages + PDFs
+- Pages מוגדר לשרת מהשורש (path=/). לכן ה-PDFים חייבים להיות בתיקייה /pdfs בשורש הריפו (ולא docs/pdfs).
+- Build PDFs (Playwright) מייצר כעת קבצים ל-pdfs/page-N.pdf ומבצע commit+push אוטומטית.
