@@ -1,54 +1,121 @@
-import { chromium } from "playwright";
 import fs from "fs";
 import path from "path";
+import { chromium } from "playwright";
 
-const BASE_URL = "https://yanivmizrachiy.github.io/pdf-system-site";
-const OUT_DIR = path.join("docs", "pdfs");
-const PAGES = [1,2,3];
+function listPages() {
+  // prefer docs/pages (source-of-truth), fallback pages/
+  const candidates = ["docs/pages", "pages"];
+  for (const dir of candidates) {
+    if (fs.existsSync(dir)) {
+      const files = fs.readdirSync(dir)
+        .filter(f => /^page-\d+\.html$/i.test(f))
+        .map(f => ({ dir, file: f }))
+        .sort((a,b) => {
+          const na = parseInt(a.file.match(/\d+/)[0], 10);
+          const nb = parseInt(b.file.match(/\d+/)[0], 10);
+          return na - nb;
+        });
+      if (files.length) return files;
+    }
+  }
+  return [];
+}
 
-function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
+function pageNum(filename) {
+  const m = filename.match(/page-(\d+)\.html/i);
+  return m ? parseInt(m[1], 10) : null;
+}
 
-(async () => {
-  fs.mkdirSync(OUT_DIR, { recursive:true });
+async function safeWaitReady(page) {
+  // 1) wait DOM + network settle
+  await page.waitForLoadState("domcontentloaded", { timeout: 60000 }).catch(()=>{});
+  await page.waitForLoadState("networkidle", { timeout: 60000 }).catch(()=>{});
+
+  // 2) fonts (important for stable PDF)
+  await page.evaluate(async () => {
+    try {
+      if (document.fonts && document.fonts.ready) await document.fonts.ready;
+    } catch {}
+  }).catch(()=>{});
+
+  // 3) MathJax (if exists)
+  await page.evaluate(async () => {
+    try {
+      // if MathJax v3 present
+      // @ts-ignore
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        // @ts-ignore
+        await window.MathJax.typesetPromise();
+      }
+    } catch {}
+  }).catch(()=>{});
+
+  // 4) minimal render marker: accept any of these
+  const selectors = [".page", ".item", "mjx-container", "svg", "body"];
+  for (const sel of selectors) {
+    try {
+      await page.waitForSelector(sel, { state: "attached", timeout: 12000 });
+      return;
+    } catch {}
+  }
+}
+
+async function main() {
+  const SITE = "https://yanivmizrachiy.github.io/pdf-system-site";
+  const pages = listPages();
+  if (!pages.length) {
+    console.log("❌ No pages found under docs/pages or pages/");
+    process.exit(1);
+  }
+
+  fs.mkdirSync("docs/pdfs", { recursive: true });
 
   const browser = await chromium.launch();
-  const context = await browser.newContext({
-    viewport: { width: 1240, height: 1754 } // A4 ratio
+  const ctx = await browser.newContext({
+    // A4-ish viewport for stable layout; PDF is true A4 anyway
+    viewport: { width: 1240, height: 1754 },
+    deviceScaleFactor: 1,
   });
-  const page = await context.newPage();
 
-  for(const n of PAGES){
-    const url = `${BASE_URL}/pages/page-${n}.html?fresh=${Date.now()}`;
-    console.log("OPEN", url);
+  const page = await ctx.newPage();
 
-    await page.goto(url, { waitUntil:"networkidle" });
-    await sleep(500);
+  let ok = 0, fail = 0;
 
-    // חכה שיש באמת תרגילים בדף
-    await page.waitForSelector(".item", { timeout:10000 });
+  for (const p of pages) {
+    const n = pageNum(p.file);
+    const url = `${SITE}/pages/${p.file}?fresh=${Date.now()}`;
+    const out = `docs/pdfs/page-${n}.pdf`;
 
-    // חכה לפונטים
-    await page.evaluate(async ()=>{
-      if(document.fonts?.ready){
-        await document.fonts.ready;
-      }
-    });
+    console.log(`OPEN ${url}`);
+    try {
+      await page.goto(url, { waitUntil: "domcontentloaded", timeout: 60000 });
+      await safeWaitReady(page);
 
-    await sleep(300);
+      await page.pdf({
+        path: out,
+        format: "A4",
+        printBackground: true,
+        margin: { top: "10mm", right: "10mm", bottom: "10mm", left: "10mm" },
+      });
 
-    const out = path.join(OUT_DIR, `page-${n}.pdf`);
-
-    await page.pdf({
-      path: out,
-      format: "A4",
-      printBackground: true,
-      margin: { top:"10mm", bottom:"10mm", left:"10mm", right:"10mm" }
-    });
-
-    const size = fs.statSync(out).size;
-    console.log("WROTE", out, "size=", size);
+      const size = fs.statSync(out).size;
+      console.log("WROTE", out, "size=", size);
+      ok++;
+    } catch (e) {
+      console.log("⚠️ PDF FAILED for", p.file, "->", String(e?.message || e));
+      fail++;
+      // keep going (do not fail whole build)
+    }
   }
 
   await browser.close();
-  console.log("DONE");
-})();
+
+  console.log(`DONE pdf build: ok=${ok} fail=${fail} total=${pages.length}`);
+  // do NOT exit 1 unless nothing succeeded
+  if (ok === 0) process.exit(1);
+}
+
+main().catch((e) => {
+  console.error("FATAL:", e);
+  process.exit(1);
+});

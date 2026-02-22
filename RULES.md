@@ -14,3 +14,7 @@ https://yanivmizrachiy.github.io/pdf-system-site/?pwa=1#page-1
 ## רצות תרגול
 - רצה 2: משוואות ריבועיות (בסיסי/בינוני) — עמודים page-4..page-6 (HTML נפרד לכל עמוד). CSS נפרד (docs/print.css). בכל עמוד נטען a4_paginate.js.
 - מנגנון יצירת PDF (Playwright) הוקשח: לא נופל אם .item לא מופיע בזמן, וממתין לטעינת דף/MathJax.
+
+## יצירת PDF (Build PDFs)
+- מנגנון יצירת PDF לא מסתמך יותר על `.item` (כי לא כל העמודים מכילים אותו). במקום זה יש המתנה חכמה: DOM+networkidle+פונטים+MathJax ואז `.page`/`body`/`mjx-container`.
+- אם עמוד אחד נכשל, הריצה ממשיכה ולא מפילה את הכל (כדי ש-page-4 ומעלה עדיין יווצרו).
