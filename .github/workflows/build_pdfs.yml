@@ -28,6 +28,11 @@ jobs:
           git config user.name "pdf-bot"
           git config user.email "bot@users.noreply.github.com"
           mkdir -p pdfs
+
+          # AUTO:SYNC_PDFS
+          mkdir -p docs/pdfs
+          cp -f pdfs/*.pdf docs/pdfs/ 2>/dev/null || true
+          git add -f pdfs/*.pdf docs/pdfs/*.pdf 2>/dev/null || true
           git add pdfs
           git commit -m "auto: build PDFs" || echo "no changes"
           git push
