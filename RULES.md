@@ -27,3 +27,6 @@ https://yanivmizrachiy.github.io/pdf-system-site/?pwa=1#page-1
 - בניית PDF כעת נעשית מקומית (file://) מתוך הריפו עצמו.
 - אין תלות ב-GitHub Pages בזמן build.
 - קבצי PDF נוצרים ב-/pdfs בשורש הריפו.
+
+## רצות תרגול
+- רצה 2: משוואות ריבועיות (בסיסי/בינוני) — נוספו עמודים page-5..page-6 (HTML נפרד לכל עמוד), CSS נפרד (docs/print.css), ובכל עמוד נטען a4_paginate.js.
