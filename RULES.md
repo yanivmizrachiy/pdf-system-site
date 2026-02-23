@@ -30,3 +30,29 @@ https://yanivmizrachiy.github.io/pdf-system-site/?pwa=1#page-1
 
 ## רצות תרגול
 - רצה 2: משוואות ריבועיות (בסיסי/בינוני) — נוספו עמודים page-5..page-6 (HTML נפרד לכל עמוד), CSS נפרד (docs/print.css), ובכל עמוד נטען a4_paginate.js.
+
+<!-- AUTO:MASTERPLAN:BEGIN -->
+# 🧠 MASTERPLAN — pdf-system-site (קבוע ומחייב)
+
+## עקרונות־על (לא נשברים)
+- הקישור הקבוע לאתר: https://yanivmizrachiy.github.io/pdf-system-site/  (לא משתנה לעולם)
+- איכות גרפיקה/טיפוגרפיה: A4 פרימיום, RTL, MathJax תקין, ריווח ויישור יציבים
+- `RULES.md` הוא מקור אמת יחיד: כל שינוי/ריצה -> מתועד כאן
+- כל build שמייצר PDFs חייב להעלות אותם ל־Pages ולהיות נגישים ב־200
+
+## מה כבר קיים (נכון להיום)
+- Pages פעיל, תיקיית /pages עם page-1..page-6
+- PDFs ב־/pdfs ומסונכרנים גם ל־/docs/pdfs
+- Workflow build_pdfs.yml שמייצר PDFs אוטומטית
+
+## מה מבצעים עכשיו (אימות + הוכחה שזה מתעדכן באמת)
+- הוספת build_stamp.txt כדי להוכיח איזו גרסה חיה כרגע ב־Pages
+- הוספת scripts/verify_live.sh לבדיקת אתר+HTML+PDFים (200) עם cache-bust
+- כל ריצה/תקלה/תיקון: מתווסף ליומן בתוך RULES.md
+
+## מה אחר כך (שדרוגים קיצוניים בלי לשבור)
+- שדרוג עיצוב הדפים (כותרת פרימיום, גריד יציב, ריווח אחיד) תוך שמירה על RTL
+- הוספת “עמוד בית” עם כפתורי ניווט לדפים + הורדות PDF
+- הוספת בדיקות איכות (lint לתבניות, בדיקת MathJax טעינה, בדיקת A4 overflow)
+<!-- AUTO:MASTERPLAN:END -->
+
