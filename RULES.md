@@ -56,3 +56,6 @@ https://yanivmizrachiy.github.io/pdf-system-site/?pwa=1#page-1
 - הוספת בדיקות איכות (lint לתבניות, בדיקת MathJax טעינה, בדיקת A4 overflow)
 <!-- AUTO:MASTERPLAN:END -->
 
+
+## יומן שינוי (אוטומטי)
+-  — bump VERSION= + build_stamp + Live Badge בדף הבית (גרסה+חותמת).
