@@ -16,6 +16,32 @@
 </head>
 
 <body>
+<!-- AUTO:LIVE_BADGE:BEGIN -->
+<div style="direction:rtl;font-family:Arial;max-width:900px;margin:16px auto;padding:14px;border:1px solid #e5e7eb;border-radius:12px">
+  <div style="font-size:18px;font-weight:700;color:#0b3a7e">✅ האתר מתעדכן — הוכחה חיה</div>
+  <div style="margin-top:8px;font-size:14px;color:#111827">
+    <div>גרסה: <b id="ver">טוען…</b></div>
+    <div>Build stamp: <b id="stamp">טוען…</b></div>
+  </div>
+</div>
+<script>
+(async function(){
+  try {
+    const v = await fetch("./VERSION.txt?fresh="+Date.now()).then(r=>r.text());
+    document.getElementById("ver").textContent = v.trim();
+  } catch(e) {
+    document.getElementById("ver").textContent = "שגיאה";
+  }
+  try {
+    const s = await fetch("./build_stamp.txt?fresh="+Date.now()).then(r=>r.text());
+    document.getElementById("stamp").textContent = s.trim();
+  } catch(e) {
+    document.getElementById("stamp").textContent = "שגיאה";
+  }
+})();
+</script>
+<!-- AUTO:LIVE_BADGE:END -->
+
   <div class="page">
     <div class="pageNoWrap"><div class="pageNo">1</div></div>
 
