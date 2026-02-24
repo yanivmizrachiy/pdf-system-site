@@ -1,4 +1,4 @@
-name: QA Gate (A4/RTL/MathJax)
+name: QA Gate (A4/RTL/Meta/MathJax)
 on:
   push:
     branches: [ "main" ]
@@ -12,7 +12,8 @@ jobs:
         with:
           python-version: "3.x"
       - name: Run QA (must PASS)
-        run: bash scripts/qa_generate.sh
+        run: |
+          bash scripts/qa_generate.sh
       - name: Upload QA report artifact
         if: always()
         uses: actions/upload-artifact@v4
