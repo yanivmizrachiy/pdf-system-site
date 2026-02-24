@@ -144,3 +144,4 @@ https://yanivmizrachiy.github.io/pdf-system-site/?pwa=1#page-1
 ## 🧾 יומן שינוי (אוטומטי)
 - 2026-02-23T11:52:44Z — עדכון אסטרטגי מלא ל־RULES (מצב קיים + תוכנית עבודה + חוקים מחייבים).
 - 2026-02-24T05:43:05Z — HEALTH פורסם בפועל (pages+docs) + RULES עודכן באותו קומיט לפי חוק ברזל.\n- 2026-02-24T06:08:02Z — הופעל Governance Iron Mode (pre-commit + CI gate) ונרשם ב-RULES.md לפי חוק ברזל.
+- 2026-02-24T06:09:16Z — sync+verify run: pull/rebase + LIVE check initiated.
