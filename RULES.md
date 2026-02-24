@@ -1,5 +1,15 @@
 # RULES — pdf-system-site
 
+<!-- AUTO:GOVERNANCE:BEGIN -->
+## 🔒 Governance Iron Mode (חוק ברזל)
+- RULES.md הוא מקור אמת יחיד.
+- אין קומיט בלי עדכון RULES.md (נאכף מקומית ע״י pre-commit + נאכף ב-CI).
+- Gate מקומי: `.githooks/pre-commit` (core.hooksPath מוגדר לריפו).
+- Gate ב-CI: `.github/workflows/governance_gate.yml`
+Last enforcement update (UTC): 2026-02-24T06:08:02Z
+<!-- AUTO:GOVERNANCE:END -->
+
+
 \1 2026-02-24 05:43:05 UTC
 
 ## מצב מערכת
@@ -133,4 +143,4 @@ https://yanivmizrachiy.github.io/pdf-system-site/?pwa=1#page-1
 
 ## 🧾 יומן שינוי (אוטומטי)
 - 2026-02-23T11:52:44Z — עדכון אסטרטגי מלא ל־RULES (מצב קיים + תוכנית עבודה + חוקים מחייבים).
-- 2026-02-24T05:43:05Z — HEALTH פורסם בפועל (pages+docs) + RULES עודכן באותו קומיט לפי חוק ברזל.\n
+- 2026-02-24T05:43:05Z — HEALTH פורסם בפועל (pages+docs) + RULES עודכן באותו קומיט לפי חוק ברזל.\n- 2026-02-24T06:08:02Z — הופעל Governance Iron Mode (pre-commit + CI gate) ונרשם ב-RULES.md לפי חוק ברזל.
