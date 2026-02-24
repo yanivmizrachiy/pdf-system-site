@@ -115,3 +115,114 @@ html,body{ margin:0; padding:0; font-family:var(--font); font-size:var(--base); 
       var(--line2) 6.22mm
     ) border-box;
 }
+
+/* ==== PRINT LOCK ENGINE ==== */
+
+@media print {
+
+  h1, h2, h3, h4 {
+    page-break-after: avoid;
+    page-break-inside: avoid;
+  }
+
+  p, li, blockquote {
+    orphans: 3;
+    widows: 3;
+  }
+
+  img, svg {
+    max-width: 100%;
+    page-break-inside: avoid;
+  }
+
+  table {
+    page-break-inside: avoid;
+  }
+
+  .math, .katex, .MathJax {
+    page-break-inside: avoid;
+  }
+
+}
+
+/* ==== PRINT LOCK ENGINE ==== */
+
+@media print {
+
+  h1, h2, h3, h4 {
+    page-break-after: avoid;
+    page-break-inside: avoid;
+  }
+
+  p, li, blockquote {
+    orphans: 3;
+    widows: 3;
+  }
+
+  img, svg {
+    max-width: 100%;
+    page-break-inside: avoid;
+  }
+
+  table {
+    page-break-inside: avoid;
+  }
+
+  .math, .katex, .MathJax {
+    page-break-inside: avoid;
+  }
+
+}
+
+/* ==== PRINT LOCK ENGINE ==== */
+
+@media print {
+
+  h1, h2, h3, h4 {
+    page-break-after: avoid;
+    page-break-inside: avoid;
+  }
+
+  p, li, blockquote {
+    orphans: 3;
+    widows: 3;
+  }
+
+  img, svg {
+    max-width: 100%;
+    page-break-inside: avoid;
+  }
+
+  table {
+    page-break-inside: avoid;
+  }
+
+  .math, .katex, .MathJax {
+    page-break-inside: avoid;
+  }
+
+}
+
+/* ==== HARD PRINT GUARD ==== */
+
+@media print {
+
+  * {
+    box-sizing: border-box !important;
+  }
+
+  html, body {
+    width: 210mm;
+    max-width: 210mm;
+    overflow-x: hidden !important;
+  }
+
+  body {
+    transform: none !important;
+  }
+
+  .fixed, .sticky, [style*="position:fixed"] {
+    position: static !important;
+  }
+
+}

@@ -1,0 +1,77 @@
+name: PDF Build Engine (A4 Production)
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build-pdf:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install deps
+        run: |
+          npm install
+
+      - name: Run Generator
+        run: |
+          node compiler/build.mjs
+
+      - name: Run QA
+        run: |
+          bash scripts/qa_generate.sh
+
+      - name: Install Puppeteer
+        run: |
+          npm install puppeteer
+
+      - name: Render PDFs
+        run: |
+          node << "JS"
+          const puppeteer = require("puppeteer");
+          const fs = require("fs");
+          const path = require("path");
+
+          (async () => {
+            const pagesDir = path.join(process.cwd(), "pages");
+            const outDir = path.join(process.cwd(), "artifacts");
+            if (!fs.existsSync(outDir)) fs.mkdirSync(outDir);
+
+            const files = fs.readdirSync(pagesDir)
+              .filter(f => /^page-\\d+\\.html$/i.test(f));
+
+            const browser = await puppeteer.launch({ headless: "new" });
+            const page = await browser.newPage();
+
+            for (const file of files) {
+              const fileUrl = "file://" + path.join(pagesDir, file);
+              await page.goto(fileUrl, { waitUntil: "networkidle0" });
+
+              const pdfPath = path.join(outDir, file.replace(".html", ".pdf"));
+
+              await page.pdf({
+                path: pdfPath,
+                format: "A4",
+                printBackground: true,
+                margin: { top: "12mm", bottom: "12mm", left: "12mm", right: "12mm" }
+              });
+
+              console.log("PDF built:", pdfPath);
+            }
+
+            await browser.close();
+          })();
+          JS
+
+      - name: Upload PDFs
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-pdfs
+          path: artifacts/*.pdf

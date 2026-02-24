@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "pdf-system-site content schema",
+  "type": "object",
+  "required": ["title", "blocks"],
+  "additionalProperties": false,
+  "properties": {
+    "title": { "type": "string", "minLength": 1 },
+    "blocks": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/block" }
+    }
+  },
+  "definitions": {
+    "block": {
+      "type": "object",
+      "required": ["type"],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["heading", "paragraph", "question", "subquestion", "spacer", "svg"]
+        },
+        "text": { "type": "string" },
+        "math": { "type": "string" },
+        "height_mm": { "type": "number", "minimum": 0, "maximum": 200 },
+        "svg": { "type": "string" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "type": { "const": "heading" } } },
+          "then": { "required": ["text"] }
+        },
+        {
+          "if": { "properties": { "type": { "const": "paragraph" } } },
+          "then": { "required": ["text"] }
+        },
+        {
+          "if": { "properties": { "type": { "const": "question" } } },
+          "then": { "required": ["math"] }
+        },
+        {
+          "if": { "properties": { "type": { "const": "subquestion" } } },
+          "then": { "required": ["math"] }
+        },
+        {
+          "if": { "properties": { "type": { "const": "spacer" } } },
+          "then": { "required": ["height_mm"] }
+        },
+        {
+          "if": { "properties": { "type": { "const": "svg" } } },
+          "then": { "required": ["svg"] }
+        }
+      ]
+    }
+  }
+}

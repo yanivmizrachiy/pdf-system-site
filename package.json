@@ -5,5 +5,23 @@
   },
   "devDependencies": {
     "playwright": "^1.42.0"
-  }
+  },
+  "name": "pdf-system-site",
+  "version": "1.0.0",
+  "description": "",
+  "main": "sw.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yanivmizrachiy/pdf-system-site.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yanivmizrachiy/pdf-system-site/issues"
+  },
+  "homepage": "https://github.com/yanivmizrachiy/pdf-system-site#readme"
 }

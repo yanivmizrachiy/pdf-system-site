@@ -1,0 +1,17 @@
+{
+  "title": "משוואות ריבועיות",
+  "blocks": [
+    {
+      "type": "heading",
+      "text": "פתרו את המשוואות הבאות:"
+    },
+    {
+      "type": "question",
+      "math": "x^2 - 5x + 6 = 0"
+    },
+    {
+      "type": "question",
+      "math": "x^2 + 3x - 10 = 0"
+    }
+  ]
+}

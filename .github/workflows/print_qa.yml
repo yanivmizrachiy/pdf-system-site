@@ -1,0 +1,66 @@
+name: Print Render QA (A4 Validation)
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  print-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Puppeteer
+        run: |
+          npm init -y
+          npm install puppeteer
+
+      - name: Run Print Render Test
+        run: |
+          node << "JS"
+          const puppeteer = require("puppeteer");
+          const fs = require("fs");
+          const path = require("path");
+
+          (async () => {
+            const pagesDir = path.join(process.cwd(), "pages");
+            const files = fs.readdirSync(pagesDir).filter(f => f.startsWith("page-") && f.endsWith(".html"));
+
+            const browser = await puppeteer.launch({ headless: "new" });
+            const page = await browser.newPage();
+
+            let failures = 0;
+
+            for (const file of files) {
+              const filePath = "file://" + path.join(pagesDir, file);
+              await page.goto(filePath, { waitUntil: "networkidle0" });
+
+              const metrics = await page.evaluate(() => ({
+                scrollHeight: document.body.scrollHeight,
+                clientHeight: document.documentElement.clientHeight
+              }));
+
+              if (metrics.scrollHeight > metrics.clientHeight) {
+                console.log("❌ OVERFLOW:", file);
+                failures++;
+              } else {
+                console.log("✅ OK:", file);
+              }
+            }
+
+            await browser.close();
+
+            if (failures > 0) {
+              console.log("FAILURES:", failures);
+              process.exit(1);
+            } else {
+              console.log("ALL PRINT TESTS PASSED");
+            }
+          })();
+JS

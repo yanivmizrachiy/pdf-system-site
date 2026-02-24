@@ -1,0 +1,17 @@
+{
+  "page": {
+    "size": "A4",
+    "margin_mm": 12,
+    "rtl": true
+  },
+  "typography": {
+    "font_family": "David",
+    "base_font_pt": 14,
+    "line_height": 1.6
+  },
+  "rules": {
+    "avoid_break_after_heading": true,
+    "keep_question_grouped": true,
+    "math_no_break": true
+  }
+}

@@ -161,3 +161,5 @@ https://yanivmizrachiy.github.io/pdf-system-site/?pwa=1#page-1
 - 2026-02-24T19:11:31Z - QA PRO v2 PASS=100%. Auto-fix injected into all pages/page-*.html via scripts/qa_autofix_pages.py. QA: bash scripts/qa_generate.sh.
 
 - 2026-02-24T19:12:37Z - QA Gate enabled: GitHub Actions runs scripts/qa_generate.sh (must PASS). QA report: /pages/qa.html. Auto-fix: python scripts/qa_autofix_pages.py.
+
+- 2026-02-24T21:29:38Z - PDF Production Engine enabled (CI builds real A4 PDFs via Chromium + QA gate).
