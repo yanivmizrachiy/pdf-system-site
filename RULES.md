@@ -147,3 +147,5 @@ https://yanivmizrachiy.github.io/pdf-system-site/?pwa=1#page-1
 - 2026-02-24T06:09:16Z — sync+verify run: pull/rebase + LIVE check initiated.
 
 - 2026-02-24T12:47:58Z - QA report published: /pages/qa.html ; generator: scripts/qa_generate.sh ; RULES required for any change.
+
+- 2026-02-24T16:13:34Z - QA report published: /pages/qa.html ; mirrored: /docs/pages/qa.html ; generator: scripts/qa_generate.sh ; RULES required for any change.
