@@ -9,6 +9,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
+      - name: Guard generated pages policy
+        run: |
+          bash scripts/guard_generated_pages.sh "${{ github.event.before }}" "${{ github.sha }}"
         with:
           python-version: "3.x"
       - name: Run QA (must PASS)

@@ -1,0 +1,19 @@
+import fs from "fs";
+import path from "path";
+
+const root = process.cwd();
+const contentDir = path.join(root, "content");
+const pagesDir = path.join(root, "pages");
+
+if (!fs.existsSync(contentDir)) fs.mkdirSync(contentDir, { recursive: true });
+if (!fs.existsSync(pagesDir)) fs.mkdirSync(pagesDir, { recursive: true });
+
+const files = fs.readdirSync(contentDir).filter(f => f.endsWith(".json")).sort();
+
+function esc(s="") {
+  return String(s)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll("\"","&quot;")
+    .replaceAll(",

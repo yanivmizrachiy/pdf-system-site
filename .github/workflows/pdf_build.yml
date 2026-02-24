@@ -54,7 +54,7 @@ jobs:
               process.exit(1);
             }
 
-            const files = fs.readdirSync(pagesDir).filter(f => /^page-\\d+\\.html$/i.test(f));
+            const files = fs.readdirSync(pagesDir).filter(f => /^page-\\d{3}\\.html$/i.test(f));
             if (files.length === 0) {
               console.error("❌ no pages/page-*.html found");
               process.exit(1);

@@ -169,3 +169,5 @@ https://yanivmizrachiy.github.io/pdf-system-site/?pwa=1#page-1
 - 2026-02-24T21:33:44Z - PDF Production Engine enabled (CI renders real A4 PDFs via Chromium + QA gate).
 
 - 2026-02-24T21:35:15Z - Normalized pages to page-000 numbering (page-001.html...). QA PASS required.
+
+- 2026-02-24T22:24:05Z - Fixed compiler/build.mjs (clean ESM generator). Rebuild -> autofix -> QA PASS required. Pages output: page-###.html.
