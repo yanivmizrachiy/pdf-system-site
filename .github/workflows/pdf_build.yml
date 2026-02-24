@@ -8,7 +8,6 @@ on:
 jobs:
   build-pdf:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
@@ -16,23 +15,29 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install deps
+      - name: Install project deps
         run: |
           npm install
 
       - name: Run Generator
         run: |
-          node compiler/build.mjs
+          if [ -f compiler/build.mjs ]; then
+            node compiler/build.mjs
+          else
+            echo "❌ compiler/build.mjs missing"
+            ls -la compiler || true
+            exit 1
+          fi
 
       - name: Run QA
         run: |
           bash scripts/qa_generate.sh
 
-      - name: Install Puppeteer
+      - name: Install Puppeteer (Chromium in CI)
         run: |
           npm install puppeteer
 
-      - name: Render PDFs
+      - name: Render PDFs (A4)
         run: |
           node << "JS"
           const puppeteer = require("puppeteer");
@@ -42,10 +47,18 @@ jobs:
           (async () => {
             const pagesDir = path.join(process.cwd(), "pages");
             const outDir = path.join(process.cwd(), "artifacts");
-            if (!fs.existsSync(outDir)) fs.mkdirSync(outDir);
+            if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
 
-            const files = fs.readdirSync(pagesDir)
-              .filter(f => /^page-\\d+\\.html$/i.test(f));
+            if (!fs.existsSync(pagesDir)) {
+              console.error("❌ pages/ missing");
+              process.exit(1);
+            }
+
+            const files = fs.readdirSync(pagesDir).filter(f => /^page-\\d+\\.html$/i.test(f));
+            if (files.length === 0) {
+              console.error("❌ no pages/page-*.html found");
+              process.exit(1);
+            }
 
             const browser = await puppeteer.launch({ headless: "new" });
             const page = await browser.newPage();
@@ -55,7 +68,6 @@ jobs:
               await page.goto(fileUrl, { waitUntil: "networkidle0" });
 
               const pdfPath = path.join(outDir, file.replace(".html", ".pdf"));
-
               await page.pdf({
                 path: pdfPath,
                 format: "A4",
@@ -63,14 +75,15 @@ jobs:
                 margin: { top: "12mm", bottom: "12mm", left: "12mm", right: "12mm" }
               });
 
-              console.log("PDF built:", pdfPath);
+              console.log("✅ PDF built:", path.basename(pdfPath));
             }
 
             await browser.close();
-          })();
+            console.log("ALL PDFs READY");
+          })().catch(e => { console.error(e); process.exit(1); });
           JS
 
-      - name: Upload PDFs
+      - name: Upload PDFs artifact
         uses: actions/upload-artifact@v4
         with:
           name: production-pdfs
