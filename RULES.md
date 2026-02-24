@@ -151,3 +151,5 @@ https://yanivmizrachiy.github.io/pdf-system-site/?pwa=1#page-1
 - 2026-02-24T16:13:34Z - QA report published: /pages/qa.html ; mirrored: /docs/pages/qa.html ; generator: scripts/qa_generate.sh ; RULES required for any change.
 
 - 2026-02-24T16:17:23Z - QA report published: /pages/qa.html ; generator: scripts/qa_generate.sh ; publish_root=/ ; RULES required for any change.
+
+- 2026-02-24T16:19:03Z - Governance: QA is mandatory. Run scripts/qa_generate.sh after any change and verify /pages/qa.html returns 200.
