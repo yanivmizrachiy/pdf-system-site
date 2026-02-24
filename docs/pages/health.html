@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>דוח איכות — pdf-system-site</title>
+  <style>
+    body{font-family:Arial,Heebo,Assistant,sans-serif;background:#fff;margin:0;color:#111827}
+    .wrap{max-width:980px;margin:18px auto;padding:14px}
+    .card{border:1px solid #e5e7eb;border-radius:14px;padding:14px;margin:12px 0}
+    .h1{font-size:22px;font-weight:800;color:#0b3a7e}
+    .muted{color:#6b7280;font-size:13px}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid #e5e7eb;font-size:13px}
+    .ok{background:#ecfdf5;border-color:#a7f3d0;color:#065f46}
+    .bad{background:#fef2f2;border-color:#fecaca;color:#991b1b}
+    table{width:100%;border-collapse:collapse;margin-top:10px}
+    th,td{border-bottom:1px solid #e5e7eb;padding:10px 8px;text-align:right;font-size:13px}
+    th{color:#374151;font-weight:700}
+    code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px}
+    a{color:#1d4ed8;text-decoration:none}
+    .btn{cursor:pointer;border:1px solid #e5e7eb;border-radius:12px;padding:10px 12px;background:#fff;font-weight:700}
+    .btn:hover{background:#f9fafb}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="h1">דוח איכות — pdf-system-site</div>
+      <div class="muted">הדף הזה בודק LIVE (ממש עכשיו) שהאתר אכן מתעדכן ושכל המשאבים חוזרים 200.</div>
+      <div class="row" style="margin-top:10px">
+        <span class="pill" id="p_ver">גרסה: טוען…</span>
+        <span class="pill" id="p_stamp">Stamp: טוען…</span>
+        <span class="pill" id="p_time">זמן בדיקה: …</span>
+        <button class="btn" id="btn">בדוק שוב</button>
+        <a class="btn" href="../?fresh=" id="home">חזרה לדף הבית</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="row">
+        <span class="pill" id="p_sum">סיכום: …</span>
+        <span class="pill" id="p_status">סטטוס: …</span>
+      </div>
+      <table>
+        <thead>
+          <tr><th>משאב</th><th>HTTP</th><th>קישור</th></tr>
+        </thead>
+        <tbody id="tb"></tbody>
+      </table>
+    </div>
+  </div>
+
+<script>
+const SITE = location.origin + location.pathname.replace(/\/pages\/health\.html.*/, "");
+const now = () => new Date().toISOString();
+const bust = () => "fresh=" + Date.now();
+const el = (id) => document.getElementById(id);
+
+function pill(id, ok, txt){
+  const e = el(id);
+  e.classList.remove("ok","bad");
+  e.classList.add(ok ? "ok" : "bad");
+  e.textContent = txt;
+}
+
+async function getText(url){
+  const r = await fetch(url, {cache:"no-store"});
+  if(!r.ok) throw new Error("HTTP "+r.status);
+  return (await r.text()).trim();
+}
+
+async function headStatus(url){
+  try{
+    const r = await fetch(url, {method:"GET", cache:"no-store"});
+    return r.status;
+  }catch(e){
+    return 0;
+  }
+}
+
+function row(url, code){
+  const tr=document.createElement("tr");
+  const td1=document.createElement("td");
+  const td2=document.createElement("td");
+  const td3=document.createElement("td");
+  td1.innerHTML = "<code>"+url.replace(SITE,"")+"</code>";
+  td2.textContent = String(code);
+  td3.innerHTML = `<a href="${url}" target="_blank" rel="noreferrer">פתח</a>`;
+  td2.style.fontWeight="800";
+  td2.style.color = (code===200) ? "#065f46" : "#991b1b";
+  tr.append(td1,td2,td3);
+  return tr;
+}
+
+async function run(){
+  el("tb").innerHTML="";
+  el("p_time").textContent = "זמן בדיקה: " + now();
+  el("home").href = "../?"+bust();
+
+  // read version+stamp
+  try{
+    const v = await getText(SITE+"/VERSION.txt?"+bust());
+    pill("p_ver", true, "גרסה: "+v);
+  }catch(e){
+    pill("p_ver", false, "גרסה: שגיאה");
+  }
+  try{
+    const s = await getText(SITE+"/build_stamp.txt?"+bust());
+    pill("p_stamp", true, "Stamp: "+s);
+  }catch(e){
+    pill("p_stamp", false, "Stamp: שגיאה");
+  }
+
+  const urls = [];
+  urls.push(SITE+"/");
+  urls.push(SITE+"/build_stamp.txt?"+bust());
+  urls.push(SITE+"/VERSION.txt?"+bust());
+  urls.push(SITE+"/pages/health.html?"+bust());
+  for(let n=1;n<=6;n++) urls.push(SITE+`/pages/page-${n}.html?`+bust());
+  for(let n=1;n<=6;n++) urls.push(SITE+`/pdfs/page-${n}.pdf`);
+
+  let ok=0;
+  for(const u of urls){
+    const code = await headStatus(u);
+    if(code===200) ok++;
+    el("tb").appendChild(row(u, code));
+  }
+
+  const total = urls.length;
+  const pct = Math.floor((ok*100)/total);
+  pill("p_sum", pct===100, `סיכום: ${ok}/${total} (${pct}%)`);
+  pill("p_status", pct===100, pct===100 ? "סטטוס: 🟢 FULLY OPERATIONAL" : "סטטוס: 🟡 PARTIAL");
+}
+
+el("btn").addEventListener("click", run);
+run();
+</script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 # RULES — pdf-system-site
 
-עודכן: 2026-02-21 22:46 UTC
+\1 2026-02-24 05:43:05 UTC
 
 ## מצב מערכת
 PWA תקין: True
@@ -125,7 +125,7 @@ https://yanivmizrachiy.github.io/pdf-system-site/?pwa=1#page-1
 
 ## ✅ מה עושים עכשיו (המשך מיידי)
 - להבטיח ש־VERSION/STAMP תמיד נוצרים גם ב־root וגם ב־docs (כדי למנוע 404 עתידי)
-- ליצור “דוח איכות” ציבורי בדף נפרד (לדוגמה `/pages/health.html`)
+- ✅ נוצר דוח איכות ציבורי: `/pages/health.html` + קיים כפתור בדף הבית (HEALTH).
 - לחבר pipeline שמייצר תרגילים מ־JSON ולא ידנית
 
 <!-- AUTO:STRATEGY:END -->
@@ -133,3 +133,4 @@ https://yanivmizrachiy.github.io/pdf-system-site/?pwa=1#page-1
 
 ## 🧾 יומן שינוי (אוטומטי)
 - 2026-02-23T11:52:44Z — עדכון אסטרטגי מלא ל־RULES (מצב קיים + תוכנית עבודה + חוקים מחייבים).
+- 2026-02-24T05:43:05Z — HEALTH פורסם בפועל (pages+docs) + RULES עודכן באותו קומיט לפי חוק ברזל.\n
