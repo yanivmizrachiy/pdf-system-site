@@ -155,3 +155,5 @@ https://yanivmizrachiy.github.io/pdf-system-site/?pwa=1#page-1
 - 2026-02-24T16:19:03Z - Governance: QA is mandatory. Run scripts/qa_generate.sh after any change and verify /pages/qa.html returns 200.
 
 - 2026-02-24T16:31:57Z - QA PRO active. Threshold 85% required.
+
+- 2026-02-24T16:55:03Z - Auto-fix applied to pages/page-*.html to satisfy QA PRO v2 (A4/RTL/Print/Meta/MathJax).
