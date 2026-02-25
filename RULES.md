@@ -173,3 +173,5 @@ https://yanivmizrachiy.github.io/pdf-system-site/?pwa=1#page-1
 - 2026-02-24T22:24:05Z - Fixed compiler/build.mjs (clean ESM generator). Rebuild -> autofix -> QA PASS required. Pages output: page-###.html.
 
 - 2026-02-24T22:24:29Z - Fixed compiler/build.mjs (clean ESM generator). Rebuild -> autofix -> QA PASS required. Pages output: page-###.html.
+
+- 2026-02-25T21:22:28Z - Fix: ignore nested repos (.nvm/lovable/Lobeyble-2) and keep them out of git.

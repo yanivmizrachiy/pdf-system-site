@@ -3,25 +3,21 @@ import path from "path";
 
 const root = process.cwd();
 const contentDir = path.join(root, "content");
-const pagesDir = path.join(root, "pages");
+const outputDir = path.join(root, "pages");
 
-if (!fs.existsSync(contentDir)) fs.mkdirSync(contentDir, { recursive: true });
-if (!fs.existsSync(pagesDir)) fs.mkdirSync(pagesDir, { recursive: true });
+if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir, { recursive: true });
 
-// keep only non-generated pages
-for (const f of fs.readdirSync(pagesDir)) {
-  if (/^page-\d+\.html$/i.test(f)) fs.unlinkSync(path.join(pagesDir, f));
-}
-
-const files = fs.readdirSync(contentDir).filter(f => f.endsWith(".json")).sort();
+const files = fs.existsSync(contentDir)
+  ? fs.readdirSync(contentDir).filter(f => f.endsWith(".json")).sort()
+  : [];
 
 function esc(s = "") {
   return String(s)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll("\"", "&quot;")
+    .replaceAll("\x27", "&#39;");
 }
 function pad3(n) { return String(n).padStart(3, "0"); }
 
@@ -29,7 +25,7 @@ let index = 1;
 
 for (const file of files) {
   const data = JSON.parse(fs.readFileSync(path.join(contentDir, file), "utf8"));
-  const title = esc(data.title || file.replace(/\.json$/i, ""));
+  const title = esc(data.title || "דף עבודה");
 
   let body = "";
   for (const b of (data.blocks || [])) {
@@ -42,8 +38,7 @@ for (const file of files) {
     }
   }
 
-  const html =
-`<!DOCTYPE html>
+  const html = `<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -62,11 +57,11 @@ ${body}
 </html>`;
 
   const outName = `page-${pad3(index)}.html`;
-  fs.writeFileSync(path.join(pagesDir, outName), html, "utf8");
+  fs.writeFileSync(path.join(outputDir, outName), html, "utf8");
   console.log("Built:", outName);
   index++;
 }
 
 if (files.length === 0) {
-  console.log("WARN: no content/*.json found (generator produced 0 pages).");
+  console.log("WARN: no content/*.json found (0 pages generated).");
 }

@@ -9,6 +9,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
+      - name: Build generated pages
+        run: |
+          if [ -f compiler/build.mjs ]; then node compiler/build.mjs; fi
+          if [ -f compiler/build.js ]; then node compiler/build.js; fi
+      - name: Guard generated pages policy
+        run: |
+          bash scripts/guard_generated_pages.sh "${{ github.event.before }}" "${{ github.sha }}"
       - name: Guard generated pages policy
         run: |
           bash scripts/guard_generated_pages.sh "${{ github.event.before }}" "${{ github.sha }}"
