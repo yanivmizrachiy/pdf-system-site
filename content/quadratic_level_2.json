@@ -1,0 +1,69 @@
+{
+  "title": "משוואות ריבועיות — רמה 2 (גורם משותף)",
+  "blocks": [
+    {
+      "type": "heading",
+      "text": "רמה 2 — הוצאת גורם משותף (x ו־x^2)"
+    },
+    {
+      "type": "text",
+      "text": "פתור באמצעות העברת אגפים במידת הצורך והוצאת גורם משותף. אין להשתמש בנוסחת שורשים."
+    },
+    {
+      "type": "question",
+      "math": "x^2 + 3x = 0"
+    },
+    {
+      "type": "question",
+      "math": "x^2 - 7x = 0"
+    },
+    {
+      "type": "question",
+      "math": "-4x^2 = x^2"
+    },
+    {
+      "type": "question",
+      "math": "-4x = -4x^2"
+    },
+    {
+      "type": "question",
+      "math": "2x^2 + 10x = 0"
+    },
+    {
+      "type": "question",
+      "math": "5x^2 - 15x = 0"
+    },
+    {
+      "type": "question",
+      "math": "3x^2 = 12x"
+    },
+    {
+      "type": "question",
+      "math": "7x = x^2"
+    },
+    {
+      "type": "question",
+      "math": "9x^2 + 6x = 0"
+    },
+    {
+      "type": "question",
+      "math": "x^2 + x = 0"
+    },
+    {
+      "type": "question",
+      "math": "4x^2 - x = 0"
+    },
+    {
+      "type": "question",
+      "math": "6x^2 + 3x = 0"
+    },
+    {
+      "type": "question",
+      "math": "2x^2 = -8x"
+    },
+    {
+      "type": "question",
+      "math": "10x = -5x^2"
+    }
+  ]
+}

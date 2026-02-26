@@ -3,6 +3,11 @@ set -euo pipefail
 
 echo "=== QA PRE: BUILD GENERATED PAGES ==="
 if [ -f compiler/build.mjs ]; then node compiler/build.mjs; fi
+
+
+echo "=== QA PRE: AUTOFIX (after build) ==="
+python scripts/qa_autofix_pages.py
+
 if [ -f compiler/build.js ]; then node compiler/build.js; fi
 
 set -euo pipefail

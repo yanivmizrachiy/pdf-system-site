@@ -1,0 +1,61 @@
+{
+  "title": "משוואות ריבועיות — רמה 3 (פירוק לגורמים)",
+  "blocks": [
+    {
+      "type": "heading",
+      "text": "רמה 3 — פירוק לגורמים (a=1, שורשים שלמים בלבד)"
+    },
+    {
+      "type": "text",
+      "text": "פתור באמצעות פירוק לגורמים בלבד. התרגילים בנויים כך שהפתרונות שלמים."
+    },
+    {
+      "type": "question",
+      "math": "x^2 - 8x + 15 = 0"
+    },
+    {
+      "type": "question",
+      "math": "x^2 + 7x + 10 = 0"
+    },
+    {
+      "type": "question",
+      "math": "x^2 - x - 12 = 0"
+    },
+    {
+      "type": "question",
+      "math": "x^2 - 9 = 0"
+    },
+    {
+      "type": "question",
+      "math": "x^2 + 2x - 24 = 0"
+    },
+    {
+      "type": "question",
+      "math": "x^2 - 11x + 30 = 0"
+    },
+    {
+      "type": "question",
+      "math": "x^2 + x - 20 = 0"
+    },
+    {
+      "type": "question",
+      "math": "x^2 - 4x - 21 = 0"
+    },
+    {
+      "type": "question",
+      "math": "x^2 + 9x + 20 = 0"
+    },
+    {
+      "type": "question",
+      "math": "x^2 - 13x + 40 = 0"
+    },
+    {
+      "type": "question",
+      "math": "x^2 - 2x - 35 = 0"
+    },
+    {
+      "type": "question",
+      "math": "x^2 + 3x - 28 = 0"
+    }
+  ]
+}
