@@ -223,3 +223,5 @@ https://yanivmizrachiy.github.io/pdf-system-site/?pwa=1#page-1
 - 2026-02-26T09:35:27Z - RULES updated: added worksheet levels for quadratic equations (Level 2 factor common; Level 3 a=1 integer roots only).
 
 - 2026-02-26T12:28:39Z - Fix: qa_generate_core.sh runs qa_autofix_pages.py immediately after compiler/build.mjs (prevents 55.6% QA fail).
+
+- 2026-02-26T12:57:12Z - Content added: quadratic worksheets Level 2 (common factor) + Level 3 (a=1 integer roots only). Build+autofix+QA PASS required.
