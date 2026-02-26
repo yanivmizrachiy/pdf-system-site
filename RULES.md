@@ -175,3 +175,22 @@ https://yanivmizrachiy.github.io/pdf-system-site/?pwa=1#page-1
 - 2026-02-24T22:24:29Z - Fixed compiler/build.mjs (clean ESM generator). Rebuild -> autofix -> QA PASS required. Pages output: page-###.html.
 
 - 2026-02-25T21:22:28Z - Fix: ignore nested repos (.nvm/lovable/Lobeyble-2) and keep them out of git.
+
+## 🖨 דרישת חובה – כל הדפים מיועדים להדפסה A4 בלבד
+
+כל הדפים במערכת (ללא יוצא מן הכלל) חייבים לעמוד בדרישות הבאות:
+
+- פורמט הדפסה: A4 אמיתי
+- שימוש ב-@page { size: A4; }
+- RTL מלא (dir="rtl")
+- התאמה מלאה ל-print (print-color-adjust: exact)
+- ללא רכיבי UI אינטראקטיביים
+- ללא גלילה אופקית
+- מרווחים מותאמים להדפסה (לא אתר אינטרנט רגיל)
+- כותרת עליונה מסודרת
+- טיפוגרפיה אחידה וברורה
+- כל דף חייב להיות מוכן ל-"Save as PDF" בלחיצה אחת
+
+אסור לייצר דפים שמיועדים לתצוגה בלבד.
+המערכת היא מנוע יצירת דפי עבודה להדפסה – לא אתר תוכן.
+- 2026-02-26T08:06:12Z - RULES updated: all pages mandatory A4 print-only format.
