@@ -194,3 +194,5 @@ https://yanivmizrachiy.github.io/pdf-system-site/?pwa=1#page-1
 אסור לייצר דפים שמיועדים לתצוגה בלבד.
 המערכת היא מנוע יצירת דפי עבודה להדפסה – לא אתר תוכן.
 - 2026-02-26T08:06:12Z - RULES updated: all pages mandatory A4 print-only format.
+
+- 2026-02-26T08:09:13Z - RULES cleaned: fixed A4 section bullet split (print-color-adjust -> separate bullet).
