@@ -1,0 +1,61 @@
+{
+  "title": "משוואות ריבועיות — רמה 4",
+  "blocks": [
+    {
+      "type": "heading",
+      "text": "רמה 4 — פירוק מתקדם (a≠1 / צורות מיוחדות)"
+    },
+    {
+      "type": "text",
+      "text": "פתור/י באמצעות פירוק לגורמים (כולל הוצאת גורם משותף/כפל לסוגריים). אין לייצר פתרונות מסובכים."
+    },
+    {
+      "type": "question",
+      "math": "2x^2 - 8x + 6 = 0"
+    },
+    {
+      "type": "question",
+      "math": "3x^2 + 3x - 18 = 0"
+    },
+    {
+      "type": "question",
+      "math": "4x^2 - 25 = 0"
+    },
+    {
+      "type": "question",
+      "math": "6x^2 - x - 12 = 0"
+    },
+    {
+      "type": "question",
+      "math": "5x^2 + 5x - 30 = 0"
+    },
+    {
+      "type": "question",
+      "math": "2x^2 + 7x + 3 = 0"
+    },
+    {
+      "type": "question",
+      "math": "3x^2 - 12x + 9 = 0"
+    },
+    {
+      "type": "question",
+      "math": "4x^2 + 4x - 32 = 0"
+    },
+    {
+      "type": "question",
+      "math": "2x^2 - 18 = 0"
+    },
+    {
+      "type": "question",
+      "math": "3x^2 - 27 = 0"
+    },
+    {
+      "type": "question",
+      "math": "2x^2 + 10x + 12 = 0"
+    },
+    {
+      "type": "question",
+      "math": "6x^2 + 9x = 0"
+    }
+  ]
+}

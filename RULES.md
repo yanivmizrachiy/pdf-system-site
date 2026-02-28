@@ -227,3 +227,5 @@ https://yanivmizrachiy.github.io/pdf-system-site/?pwa=1#page-1
 - 2026-02-26T12:57:12Z - Content added: quadratic worksheets Level 2 (common factor) + Level 3 (a=1 integer roots only). Build+autofix+QA PASS required.
 
 - 2026-02-26T13:56:13Z - Enforced: one page per level (only quadratic_level_2.json + quadratic_level_3.json generate pages). Extra content JSONs stashed. QA PASS required.
+
+- 2026-02-28T23:57:32Z - Quadratic worksheets now 4 levels: L1=page-001, L2=page-002, L3=page-003, L4=page-004. Permanent mobile link remains /pages/qa.html and must stay HTTP 200.

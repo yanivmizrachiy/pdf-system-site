@@ -1,0 +1,61 @@
+{
+  "title": "משוואות ריבועיות — רמה 1",
+  "blocks": [
+    {
+      "type": "heading",
+      "text": "רמה 1 — משוואות ריבועיות בסיסיות (x² = מספר / x² − k = 0)"
+    },
+    {
+      "type": "text",
+      "text": "פתור/י. מותר להשתמש בשורש ריבועי. התרגילים בנויים כך שהתשובות ברורות."
+    },
+    {
+      "type": "question",
+      "math": "x^2 = 16"
+    },
+    {
+      "type": "question",
+      "math": "x^2 = 25"
+    },
+    {
+      "type": "question",
+      "math": "x^2 = 36"
+    },
+    {
+      "type": "question",
+      "math": "x^2 = 9"
+    },
+    {
+      "type": "question",
+      "math": "x^2 = 4"
+    },
+    {
+      "type": "question",
+      "math": "x^2 = 1"
+    },
+    {
+      "type": "question",
+      "math": "x^2 = 0"
+    },
+    {
+      "type": "question",
+      "math": "x^2 - 49 = 0"
+    },
+    {
+      "type": "question",
+      "math": "x^2 - 64 = 0"
+    },
+    {
+      "type": "question",
+      "math": "x^2 - 81 = 0"
+    },
+    {
+      "type": "question",
+      "math": "x^2 - 100 = 0"
+    },
+    {
+      "type": "question",
+      "math": "x^2 - 121 = 0"
+    }
+  ]
+}
