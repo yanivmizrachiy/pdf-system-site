@@ -1,0 +1,1 @@
+# 📌 CONTROL INDEX — pdf-system-site\n\n## 2026-03-01T00:32:34+02:00 — init\n
